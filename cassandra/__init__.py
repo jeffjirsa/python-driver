@@ -93,6 +93,12 @@ class ConsistencyLevel(object):
     one response.
     """
 
+    COORDINATOR_ONLY = 11
+    """
+    Sends a request to the coordinator and will not block waiting for
+    consensus among any other replicas
+    """
+
 ConsistencyLevel.value_to_name = {
     ConsistencyLevel.ANY: 'ANY',
     ConsistencyLevel.ONE: 'ONE',
@@ -104,7 +110,8 @@ ConsistencyLevel.value_to_name = {
     ConsistencyLevel.EACH_QUORUM: 'EACH_QUORUM',
     ConsistencyLevel.SERIAL: 'SERIAL',
     ConsistencyLevel.LOCAL_SERIAL: 'LOCAL_SERIAL',
-    ConsistencyLevel.LOCAL_ONE: 'LOCAL_ONE'
+    ConsistencyLevel.LOCAL_ONE: 'LOCAL_ONE',
+    ConsistencyLevel.COORDINATOR_ONLY: 'COORDINATOR_ONLY'
 }
 
 ConsistencyLevel.name_to_value = {
@@ -118,7 +125,8 @@ ConsistencyLevel.name_to_value = {
     'EACH_QUORUM': ConsistencyLevel.EACH_QUORUM,
     'SERIAL': ConsistencyLevel.SERIAL,
     'LOCAL_SERIAL': ConsistencyLevel.LOCAL_SERIAL,
-    'LOCAL_ONE': ConsistencyLevel.LOCAL_ONE
+    'LOCAL_ONE': ConsistencyLevel.LOCAL_ONE,
+    'COORDINATOR_ONLY': ConsistencyLevel.COORDINATOR_ONLY
 }
 
 
