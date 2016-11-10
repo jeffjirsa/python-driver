@@ -92,6 +92,18 @@ class ConsistencyLevel(object):
     one response.
     """
 
+    QUORUM_PLUS_LOCAL_ONE = 253
+    """
+    Sends a write request to all replicas and requires a quorum in 
+    the cluster, and at least one write in the local datacenter
+    """
+
+    QUORUM_PLUS_LOCAL_QUORUM = 254
+    """
+    Sends a write request to all replicas and requires a quorum in
+    the cluster, and a quorum in the local datacenter
+    """
+
 ConsistencyLevel.value_to_name = {
     ConsistencyLevel.ANY: 'ANY',
     ConsistencyLevel.ONE: 'ONE',
@@ -103,7 +115,9 @@ ConsistencyLevel.value_to_name = {
     ConsistencyLevel.EACH_QUORUM: 'EACH_QUORUM',
     ConsistencyLevel.SERIAL: 'SERIAL',
     ConsistencyLevel.LOCAL_SERIAL: 'LOCAL_SERIAL',
-    ConsistencyLevel.LOCAL_ONE: 'LOCAL_ONE'
+    ConsistencyLevel.LOCAL_ONE: 'LOCAL_ONE',
+    ConsistencyLevel.QUORUM_PLUS_LOCAL_ONE: 'QUORUM_PLUS_LOCAL_ONE',
+    ConsistencyLevel.QUORUM_PLUS_LOCAL_QUORUM: 'QUORUM_PLUS_LOCAL_QUORUM'
 }
 
 ConsistencyLevel.name_to_value = {
@@ -117,7 +131,9 @@ ConsistencyLevel.name_to_value = {
     'EACH_QUORUM': ConsistencyLevel.EACH_QUORUM,
     'SERIAL': ConsistencyLevel.SERIAL,
     'LOCAL_SERIAL': ConsistencyLevel.LOCAL_SERIAL,
-    'LOCAL_ONE': ConsistencyLevel.LOCAL_ONE
+    'LOCAL_ONE': ConsistencyLevel.LOCAL_ONE,
+    'QUORUM_PLUS_LOCAL_ONE': ConsistencyLevel.QUORUM_PLUS_LOCAL_ONE,
+    'QUORUM_PLUS_LOCAL_QUORUM': ConsistencyLevel.QUORUM_PLUS_LOCAL_QUORUM
 }
 
 
