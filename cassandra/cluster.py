@@ -734,7 +734,8 @@ class Cluster(object):
                  allow_beta_protocol_version=False,
                  timestamp_generator=None,
                  idle_heartbeat_timeout=30,
-                 no_compact=False):
+                 no_compact=False,
+                 load_balancing_policy=None):
         """
         ``executor_threads`` defines the number of threads in a pool for handling asynchronous tasks such as
         extablishing connection pools or refreshing metadata.

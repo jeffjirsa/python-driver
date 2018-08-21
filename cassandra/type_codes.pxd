@@ -39,4 +39,5 @@ cdef enum:
     SetType
     UserType
     TupleType
+    QueueType
 

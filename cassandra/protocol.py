@@ -36,7 +36,7 @@ from cassandra.cqltypes import (AsciiType, BytesType, BooleanType,
                                 CounterColumnType, DateType, DecimalType,
                                 DoubleType, FloatType, Int32Type,
                                 InetAddressType, IntegerType, ListType,
-                                LongType, MapType, SetType, TimeUUIDType,
+                                LongType, MapType, QueueType, SetType, TimeUUIDType,
                                 UTF8Type, VarcharType, UUIDType, UserType,
                                 TupleType, lookup_casstype, SimpleDateType,
                                 TimeType, ByteType, ShortType, DurationType)
@@ -727,7 +727,7 @@ class ResultMessage(_MessageType):
         if typeclass in (ListType, SetType):
             subtype = cls.read_type(f, user_type_map)
             typeclass = typeclass.apply_parameters((subtype,))
-        elif typeclass == MapType:
+        elif typeclass == MapType or typeclass == QueueType:
             keysubtype = cls.read_type(f, user_type_map)
             valsubtype = cls.read_type(f, user_type_map)
             typeclass = typeclass.apply_parameters((keysubtype, valsubtype))

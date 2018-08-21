@@ -813,6 +813,50 @@ class MapType(_ParameterizedType):
             buf.write(valbytes)
         return buf.getvalue()
 
+class QueueType(_ParameterizedType):
+    typename = 'queue'
+    num_subtypes = 2
+
+    @classmethod
+    def deserialize_safe(cls, byts, protocol_version):
+        key_type, value_type = cls.subtypes
+        length = 4
+        numelements = int32_unpack(byts[:length])
+        p = length
+        themap = util.OrderedMapSerializedKey(key_type, protocol_version)
+        inner_proto = max(3, protocol_version)
+        for _ in range(numelements):
+            key_len = int32_unpack(byts[p:p + length])
+            p += length
+            keybytes = byts[p:p + key_len]
+            p += key_len
+            val_len = int32_unpack(byts[p:p + length])
+            p += length
+            valbytes = byts[p:p + val_len]
+            p += val_len
+            key = key_type.from_binary(keybytes, inner_proto)
+            val = value_type.from_binary(valbytes, inner_proto)
+            themap._insert_unchecked(key, keybytes, val)
+        return themap
+
+    @classmethod
+    def serialize_safe(cls, themap, protocol_version):
+        key_type, value_type = cls.subtypes
+        buf = io.BytesIO()
+        buf.write(int32_pack(len(themap)))
+        try:
+            items = six.iteritems(themap)
+        except AttributeError:
+            raise TypeError("Got a non-map object for a map value")
+        inner_proto = max(3, protocol_version)
+        for key, val in items:
+            keybytes = key_type.to_binary(key, inner_proto)
+            valbytes = value_type.to_binary(val, inner_proto)
+            buf.write(int32_pack(len(keybytes)))
+            buf.write(keybytes)
+            buf.write(int32_pack(len(valbytes)))
+            buf.write(valbytes)
+        return buf.getvalue()
 
 class TupleType(_ParameterizedType):
     typename = 'tuple'
